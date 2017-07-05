@@ -9,6 +9,7 @@ const rp = require('request-promise');
 require('dotenv').config();
 Promise.promisifyAll(Trello.prototype);
 
+const TRELLO_MAX_RATE = 300; // max one request every x milliseconds
 const conferences = require('./conferences.json');
 
 const getConference = (name) =>
@@ -73,6 +74,21 @@ app.post('/', function(req, res){
 
   const trello = new Trello(process.env.TRELLO_KEY, token);
 
+  let lastTrelloRequest = null
+  // rate limited Trello API requests
+  const trelloPost = (path, params) => {
+    const now = Date.now();
+    const delta = now - lastTrelloRequest;
+    lastTrelloRequest = now;
+    const doThePost = () => trello.postAsync(path, params)
+
+    if (delta < TRELLO_MAX_RATE) {
+      return Promise.delay(TRELLO_MAX_RATE - delta).then(doThePost)
+    } else {
+      return doThePost();
+    }
+  }
+
   const write = (s, newLine = true) => res.write(s + (newLine ? "</p><p>" : ''));
   const willWrite = (s, newLine = true) => () => write(s, newLine)
 
@@ -93,7 +109,7 @@ app.post('/', function(req, res){
 
     write(`Creating "${board_name}" board... `, false)
 
-    return trello.postAsync('/1/boards', {
+    return trelloPost('/1/boards', {
       name: board_name,
       idOrganization: board_idOrg,
       defaultLabels: false,
@@ -102,7 +118,7 @@ app.post('/', function(req, res){
     .tap(board => write(`done — <a href="${board.url}" target="_blank">watch it grow!</a>`))
     // add 'how to use' list
     .then(board =>
-      trello.postAsync('/1/lists', {
+      trelloPost('/1/lists', {
         idBoard: board.id,
         name: 'How to use this board',
       })
@@ -124,7 +140,7 @@ app.post('/', function(req, res){
             'Share the board with everyone else at your company so they can learn too, including your notes on how this can apply to your situation!',
           ],
           name =>
-            trello.postAsync('/1/cards', { name, idList: list.id })
+            trelloPost('/1/cards', { name, idList: list.id })
             .tap(willWrite('.', false))
         )
         .tap(willWrite(' ✓'))
@@ -135,7 +151,7 @@ app.post('/', function(req, res){
     // create labels
     .tap(board =>
       Promise.each(labels, (name, index) =>
-        trello.postAsync(`/1/boards/${board.id}/labels`, {
+        trelloPost(`/1/boards/${board.id}/labels`, {
           name,
           color: labelColors[index % labelColors.length+1]
         })
@@ -150,17 +166,17 @@ app.post('/', function(req, res){
     // add each day's slots and sessions
     .tap(board =>
       Promise.each(days, day =>
-        trello.postAsync('/1/lists', {
+        trelloPost('/1/lists', {
           idBoard: board.id,
           name: day.title,
           pos: 'bottom',
         })
-        .tap(dayList => trello.postAsync('/1/cards', { name: 'Goals for this day', idList: dayList.id }))
-        .tap(dayList => trello.postAsync('/1/cards', { name: 'Key takeaways', idList: dayList.id }))
+        .tap(dayList => trelloPost('/1/cards', { name: 'Goals for this day', idList: dayList.id }))
+        .tap(dayList => trelloPost('/1/cards', { name: 'Key takeaways', idList: dayList.id }))
         .tap(willWrite(`  ${day.title}`))
         .then(() =>
           Promise.each(day.slots, slot =>
-            trello.postAsync('/1/lists', {
+            trelloPost('/1/lists', {
               idBoard: board.id,
               name: slot.time,
               pos: 'bottom',
@@ -168,7 +184,7 @@ app.post('/', function(req, res){
             .tap(willWrite(`    ${slot.time}`, false))
             .then(list =>
               Promise.each(slot.sessions, session =>
-                trello.postAsync('/1/cards', {
+                trelloPost('/1/cards', {
                   name: `${session.title} — ${session.speakers}`,
                   desc: session.blurb,
                   idLabels: session.labels.map(label => labelIds[label]).join(','),
@@ -176,7 +192,7 @@ app.post('/', function(req, res){
                 })
                 .then(card =>
                   Promise.each(session.avatars.reverse(), avatarUrl =>
-                    trello.postAsync(`/1/cards/${card.id}/attachments`, { url: avatarUrl })
+                    trelloPost(`/1/cards/${card.id}/attachments`, { url: avatarUrl })
                   ) // Promise.each
                 ) // then card
                 .tap(willWrite('.', false))
