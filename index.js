@@ -115,7 +115,7 @@ app.post('/', function(req, res){
       defaultLabels: false,
       defaultLists: false,
     })
-    .tap(board => write(`done — <a href="${board.url}" target="_blank">watch it grow!</a>`))
+    .tap(board => write(`done — <a href="${board.url}" target="_blank">watch it grow!</a><p>(if this page stops updating, check the Trello board as the server may still be working on it)</p>`))
     // add 'how to use' list
     .then(board =>
       trelloPost('/1/lists', {
@@ -128,7 +128,7 @@ app.post('/', function(req, res){
         Promise.each([
             '** BEFORE THE CONFERENCE **',
             'Add all your team mates that are going the conference to this board.',
-            'Choose which session you\'re going to in each slot by adding yourself to the card.',
+            'Choose which sessions you\'re going to in each slot by adding yourself to those cards. (Press `space` when the card is open or under your cursor).',
             '** DURING THE CONFERENCE **',
             'Use this board on your laptop, iPhone, iPad or Android device with Trello\'s mobile apps.',
             'You can write notes as comments on the session\'s card, and attach any photos or links to elsewhere to the card too.',
