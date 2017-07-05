@@ -15,6 +15,9 @@ html
       p Create a Trello board with the full conference schedule — for you and your teammates.
       p Use it to plan your sessions; record notes, photos and links; share with your whole team!
 
+      if conference.image != null
+        img#board(src=conference.image alt="Trello board")
+
       #error
 
       #loading Loading…
