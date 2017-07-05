@@ -9,19 +9,13 @@ const rp = require('request-promise');
 require('dotenv').config();
 Promise.promisifyAll(Trello.prototype);
 
-// -- Config --
-const conference = {
-  name: 'fullstack2017',
-  title: 'FullStack 2017',
-  scheduleUrl: 'https://skillsmatter.com/conferences/8264-fullstack-2017-the-conference-on-javascript-node-and-internet-of-things',
-}
+const conferences = require('./conferences.json');
 
-// ---
+const getConference = (name) =>
+  (conferences[name] != null) ? _.extend(conferences[name], { name }) : null;
 
 const labelColors = ['green', 'yellow', 'orange', 'red', 'purple', 'blue',
  'sky', 'lime', 'pink', 'black'];
-
-const fetcher = require(`./conferences/${conference.name}.js`);
 
 const app = express();
 app.set('view engine', 'pug');
@@ -29,17 +23,39 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static('public'));
 
-app.get('/', function(req, res) {
-  res.render('index', {
-    appKey: process.env.TRELLO_KEY,
-    conference: conference,
-  });
+app.get('/:conference?', function(req, res) {
+  const conference = getConference(req.query.conference || req.params.conference);
+
+  if (conference == null) {
+    if (req.params.conference != null) {
+      res.redirect('/');
+    } else {
+      res.render('select_conference', {
+        conferences
+      });
+    }
+  } else {
+    res.render('index', {
+      appKey: process.env.TRELLO_KEY,
+      conference: conference,
+    });
+  }
 })
 
 app.post('/', function(req, res){
   const { board_idOrg, token } = req.body;
 
   const board_name = req.body.board_name.trim()
+
+  const conference = getConference(req.query.conference);
+
+  if (conference == null) {
+    res.redirect(303, '/');
+    return;
+  }
+
+  conference.name = req.query.conference;
+  const fetcher = require(`./conferences/${req.query.conference}.js`);
 
   try {
     if (!board_name) {

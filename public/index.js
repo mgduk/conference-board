@@ -53,6 +53,11 @@ showForm = () => {
 }
 
 $().ready(() => {
+  const params = (new URL(document.location)).searchParams;
+  if (params.get('conference')) {
+    history.replaceState({}, null, `/${params.get('conference')}`);
+  }
+
   Trello.authorize({ interactive: false });
 
   if (Trello.authorized()) {

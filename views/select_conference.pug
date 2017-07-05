@@ -1,0 +1,18 @@
+html
+  head
+    title= `Conference Boards with Trello`
+    link(href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet")
+    link(href="/style.css" rel="stylesheet")
+  body
+    article
+      h1= `Conference Boards with Trello`
+
+      p Create a Trello board with the full conference schedule.
+      p Use it to plan your sessions; record notes, photos and links; share with your whole team!
+
+      form(method=get)
+        label Conference
+        select(name='conference')
+          each conference, name in conferences
+            option(value=name)= conference.title
+        button(type='submit') Select this conference

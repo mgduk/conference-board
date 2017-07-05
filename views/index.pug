@@ -24,6 +24,7 @@ html
       #form(style='display: none')
         form(action='/' method='post')
           input#token(type='hidden' name='token')
+          input#conference(type='hidden' name='conference' value=conference.name)
           div
             label(for='board_name') Board name
             input#board_name(name='board_name' value=conference.title)
