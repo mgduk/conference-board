@@ -14,3 +14,15 @@ button:hover { background-color: #026AA7; }
 #signed_in > p:first-child { margin-top: 0; }
 #error { color: red; margin-top: 1em; }
 #board { max-width: 100%; max-height: 20em; }
+footer {
+  margin: 0;
+}
+footer > a {
+  color: #999;
+  padding: 1em;
+  display: block;
+  text-align: center;
+}
+footer > a:hover {
+  color: #444;
+}
