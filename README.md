@@ -2,6 +2,8 @@
 
 Creates your own copy of a conference schedule as an _unbelievably useful_ Trello board.
 
+[https://conference-board.glitch.me](https://conference-board.glitch.me/)
+
 ![Example board](https://trello-attachments.s3.amazonaws.com/595d54870a2ec51739d5fa32/595d57e1e6633c571488dd09/68906c3bdf898162842d52166d5a1eaa/fullstack2017.png)
 
 Your Trello board will become an invaluable resource for you and your teammates, helping you get the most from your time at the conference.
