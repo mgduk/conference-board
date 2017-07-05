@@ -1,5 +1,5 @@
 
-doAuth = () =>
+doAuth = (ev) =>
   Trello.authorize({
     name: ev.target.getAttribute('data-name') || 'Conference board',
     scope: { read: true, write: true },
@@ -11,6 +11,7 @@ showAuth = () => {
   $('#loading').hide()
   $('#trello_auth').show()
   $('#form').hide();
+  $('#signed_in').hide();
   $('#trello_auth').click(doAuth);
 }
 
@@ -35,7 +36,8 @@ showForm = () => {
     (member) => {
       $('#trello_name').text(`${member.fullName} (${member.username})`);
       $('#avatar').attr('src', `https://trello-avatars.s3.amazonaws.com/${member.avatarHash}/50.png`)
-      $('#teams').html('<option>No team</option>');
+      $('#signed_in').show();
+      $('#teams').html('<option>Not in a team</option>');
       member.organizations.forEach(team =>
         $('#teams').append(`<option value="${team.id}">${team.displayName}</option>`)
       );

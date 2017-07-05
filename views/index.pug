@@ -26,25 +26,25 @@ html
           input#token(type='hidden' name='token')
           input#conference(type='hidden' name='conference' value=conference.name)
           div
-            label(for='board_name') Board name
+            label(for='board_name') Create a Board called
             input#board_name(name='board_name' value=conference.title)
           div
-            label(for='team') Team
+            label(for='team') In your Trello Team
             select#teams(name='board_idOrg')
               option Loading…
           div
             button(type=submit) Create my conference board
 
-          p This button will create a new board in your Trello account. It parses the <a href="#{conference.scheduleUrl}">conference schedule</a> and creates lists and cards for each session.
+      p.small This app will create a new board in your Trello account. It parses the <a href="#{conference.scheduleUrl}">conference schedule</a> and creates lists and cards for each session.
 
-          p.small Your Trello account is not accessed in any other way, except to list your teams for the form above, and the authorization token lives only in your browser's localStorage.
+      p.small Your Trello account is not accessed in any other way, except to list your teams for the form above, and the authorization token lives only in your browser's localStorage.
 
-          #signed_in
-            p You are connected to Trello as:
-            div
-              img#avatar
-              span#trello_name …
-              button.inline#unauth Disconnect
+      #signed_in(style:'display:none')
+        p You are connected to Trello as:
+        div
+          img#avatar
+          span#trello_name …
+          button.inline#unauth Disconnect
 
     script(src=`https://trello.com/1/client.js?key=${appKey}`)
     script(src='/index.js')
