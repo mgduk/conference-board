@@ -147,6 +147,21 @@ app.post('/', function(req, res){
         .then(() => board)
       )
     )
+    .tap(willWrite('  - people list...', false))
+    .tap(board =>
+      trelloPost('/1/lists', {
+        idBoard: board.id,
+        name: 'People',
+        pos: 'bottom',
+      })
+      .then(list =>
+        trelloPost('/1/cards', {
+          idList: list.id,
+          name: 'Record details of the interesting people you meet here'
+        })
+      )
+    )
+    .tap(willWrite(' ✓'))
     .tap(willWrite(`  - ${labels.length} labels`, false))
     // create labels
     .tap(board =>
