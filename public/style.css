@@ -1,0 +1,14 @@
+body { background: #efefef; font-family: 'Raleway', sans-serif; color: #333; }
+article { background: #fff; padding: 1em; margin: 2em auto; max-width: 26em; }
+h1 { margin: 0 0 1em; }
+form { margin: 2em 0 0; }
+label { display: block; margin: 0 0 0.33em; }
+input, select, button { font-family: 'Raleway', sans-serif; font-size: 1em; margin: 0 0 1em 0; min-width: 100%; }
+button { margin-top: 1em; background: #0079BF; border: 1px solid #055A8C; border-bottom-color: #0C3953; color: #fff; border-radius: 3px; padding: 0.5em; cursor: pointer; }
+button.inline { margin: 0 0.33em; padding: 0.2em 0.5em; min-width: 0; background-color: #666; border-color: #222; }
+button.inline:hover { background-color: #444; }
+button:hover { background-color: #026AA7; }
+#avatar { vertical-align: middle; margin-right: 0.5em; width: 50px; height: 50px; }
+.small { font-size: 0.8em; color: #555; }
+#signed_in { border-top: 1px solid #efefef; padding-top: 1em; margin-top: 1em; }
+#signed_in > p:first-child { margin-top: 0; }
