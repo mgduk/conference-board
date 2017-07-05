@@ -37,7 +37,7 @@ showForm = () => {
       $('#trello_name').text(`${member.fullName} (${member.username})`);
       $('#avatar').attr('src', `https://trello-avatars.s3.amazonaws.com/${member.avatarHash}/50.png`)
       $('#signed_in').show();
-      $('#teams').html('<option>Not in a team</option>');
+      $('#teams').html('<option value="">Not in a team</option>');
       member.organizations.forEach(team =>
         $('#teams').append(`<option value="${team.id}">${team.displayName}</option>`)
       );
