@@ -12,7 +12,6 @@ showAuth = () => {
   $('#trello_auth').show()
   $('#form').hide();
   $('#signed_in').hide();
-  $('#trello_auth').click(doAuth);
 }
 
 showForm = () => {
@@ -59,6 +58,8 @@ $().ready(() => {
   if (params.get('conference')) {
     history.replaceState({}, null, `/${params.get('conference')}`);
   }
+
+  $('#trello_auth').click(doAuth);
 
   Trello.authorize({ interactive: false });
 
