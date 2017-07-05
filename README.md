@@ -111,3 +111,14 @@ It's easy to add a conference. You just need a module that gets the data from so
 Add a module that fetches and returns an object of that form into the `conferences` folder. Then add an entry to the `conferences.json` file, with a key matching the filename of that fetching module.
 
 Please open PRs to add other conferences!
+
+
+## Remix on Glitch
+Use Glitch to easily get a copy of this app to develop and change — or even if you just want to run your own instance.
+
+[![Remix on Glitch](https://cdn.glitch.com/2703baf2-b643-4da7-ab91-7ee2a2d00b5b%2Fremix-button.svg)](https://glitch.com/edit/#!/remix/https://glitch.com/edit/#!/remix/conference-board)
+
+You'll then just need to [get an API key from Trello](https://trello.com/app-key) and add it to the .env file as
+```
+TRELLO_KEY=<your Trello app key>
+```
