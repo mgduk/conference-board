@@ -35,7 +35,7 @@ module.exports = (url) =>
           speakers: $('.speakers', $sessionEl).text().trim(),
           avatars: $('.listing-avatar', $sessionEl).get().map(img => $(img).attr('src')),
           blurb: $('.reveal-modal .row:nth-child(2) .columns p', $sessionEl).text().trim(),
-          labels: $('.label', $sessionEl).get().map(labelEl => $(labelEl).text().trim())
+          labels: _.uniq($('.label', $sessionEl).get().map(labelEl => $(labelEl).text().trim()))
         }
       })
 
