@@ -1,7 +1,7 @@
 
 doAuth = (ev) =>
   Trello.authorize({
-    name: ev.target.getAttribute('data-name') || 'Conference board',
+    name: `Conference board for ${ev.target.getAttribute('data-name')}` || 'Conference board',
     scope: { read: true, write: true },
     expiration: '1hour',
     interactive: true,
