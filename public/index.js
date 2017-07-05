@@ -21,6 +21,7 @@ showForm = () => {
 
   $('#unauth').click(ev => {
     ev.preventDefault();
+    Trello.deauthorize();
     sessionStorage.clear();
     showAuth();
   });
