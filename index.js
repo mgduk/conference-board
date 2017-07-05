@@ -47,15 +47,16 @@ app.post('/', function(req, res){
 
   const board_name = req.body.board_name.trim()
 
-  const conference = getConference(req.query.conference);
+  const conference = getConference(req.body.conference);
 
   if (conference == null) {
     res.redirect(303, '/');
     return;
   }
 
-  conference.name = req.query.conference;
-  const fetcher = require(`./conferences/${req.query.conference}.js`);
+  conference.name = req.body.conference;
+
+  const fetcher = require(`./conferences/${conference.name}.js`);
 
   try {
     if (!board_name) {
