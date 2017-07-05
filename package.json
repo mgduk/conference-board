@@ -1,6 +1,6 @@
 {
   "name": "conference-board",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Create a Trello board from a conference timetable",
   "main": "index.js",
   "scripts": {
