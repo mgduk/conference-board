@@ -1,7 +1,7 @@
 {
-  "name": "fullstackcon",
+  "name": "conference-board",
   "version": "1.0.0",
-  "description": "Parse Full Stack Conference timetable to Trello board",
+  "description": "Create a Trello board from a conference timetable",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
