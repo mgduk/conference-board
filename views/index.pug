@@ -49,8 +49,7 @@ html
           span#trello_name …
           button.inline#unauth Disconnect
 
-    footer
-      a(href='https://mgduk.github.io/conference-board/') Add other conferences! Submit a PR on GitHub
+    include _footer.pug
 
     script(src=`https://trello.com/1/client.js?key=${appKey}`)
     script(src='/index.js')
