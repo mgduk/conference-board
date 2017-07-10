@@ -2,6 +2,7 @@
   "fullstack2017": {
     "title": "FullStack 2017",
     "scheduleUrl": "https://skillsmatter.com/conferences/8264-fullstack-2017-the-conference-on-javascript-node-and-internet-of-things",
-    "image": "https://trello-attachments.s3.amazonaws.com/595d54870a2ec51739d5fa32/595d57e1e6633c571488dd09/68906c3bdf898162842d52166d5a1eaa/fullstack2017.png"
+    "image": "https://trello-attachments.s3.amazonaws.com/595d54870a2ec51739d5fa32/595d57e1e6633c571488dd09/68906c3bdf898162842d52166d5a1eaa/fullstack2017.png",
+    "exampleBoardUrl": "https://trello.com/b/eW3OHAaS/example-conference-board-fullstack-2017"
   }
 }

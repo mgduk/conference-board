@@ -12,10 +12,15 @@ html
     article
       h1= `${conference.title} with Trello`
 
-      p Create a Trello board with the full conference schedule — for you and your teammates.
-      p Use it to plan your sessions; record notes, photos and links; share with your whole team!
+      include _intro.pug
 
-      if conference.image != null
+      if conference.exampleBoardUrl != null
+        a(href=conference.exampleBoardUrl)
+          if conference.image != null
+            img#board(src=conference.image alt="Example Trello board")
+          else
+            Example Trello board
+      else if conference.image != null
         img#board(src=conference.image alt="Trello board")
 
       #error
